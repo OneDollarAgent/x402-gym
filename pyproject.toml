@@ -1,0 +1,11 @@
+[project]
+name = "x402-gym"
+version = "0.2.1"
+description = "RL environment for safe autonomous spending on the agentic web (x402 payment-gated APIs)"
+keywords = ["rl", "environment", "agents", "x402", "payments", "security", "verifiers"]
+requires-python = ">=3.10"
+license = {text = "Apache-2.0"}
+
+[project.optional-dependencies]
+hub = ["verifiers"]
+test = ["pytest"]
