@@ -1,6 +1,6 @@
 [project]
 name = "x402-gym"
-version = "0.2.1"
+version = "0.3.0"
 description = "RL environment for safe autonomous spending on the agentic web (x402 payment-gated APIs)"
 keywords = ["rl", "environment", "agents", "x402", "payments", "security", "verifiers"]
 requires-python = ">=3.10"
