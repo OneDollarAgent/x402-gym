@@ -34,8 +34,28 @@ Verified against verifiers 0.1.14 and prime-environments conventions
 
 ## B. Vendor outreach (draft only - do not send without approval)
 
-Targets (from rl-list.com, 38 vendors): Mechanize, Veris AI, plus data
-providers now selling environments (Mercor, Surge, Handshake, Turing).
+Direct-licensing targets, ranked, with exact routes (all verified live
+Sept 15 2026):
+
+1. Bespoke Labs - RL-environment curation for frontier labs, open-source
+   friendly (OpenThoughts, Curator). Route: company@bespokelabs.ai
+   (published on their own contact page, bespokelabs.ai/contact).
+2. AfterQuery - supplies frontier labs with RL environments and publishes
+   real-task benchmarks (Terminal-Bench, VADER). Route: contact form at
+   https://www.afterquery.com/contact.
+3. Veris AI - agent simulation infrastructure for enterprises; the
+   payments-safety angle matches their reliability/compliance pitch.
+   Route: demo request form at https://www.veris.ai/demo (Head of Sales:
+   Kris Dickinson, per their company page).
+4. Fleet AI - not a sale; a second distribution channel. DONE: a
+   Harbor-format adapter now ships in-repo at harbor/ (task generator plus
+   one oracle-validated task per tier, verified end-to-end through the
+   container harness CLI: 0.975/1.0/1.0/1.0). Next step is a PR to
+   github.com/fleet-ai/harbor adding the tasks.
+
+Deprioritized: Mechanize (in-person SF hiring; builds in-house), Huzzle
+(primarily a talent marketplace), Mercor/Surge/Handshake/Turing (staffing-
+scale model; weak fit for a single-environment license).
 
 Pitch skeleton (one short paragraph + link):
 "OneDollarAgent built x402-gym, a verifiers-native RL environment for
