@@ -7,13 +7,18 @@ pytestmark = pytest.mark.skipif(
 
 from types import SimpleNamespace as Msg
 
+def _run(coro):
+    import asyncio
+    return asyncio.run(coro)
+
+
 def drive(env, state, actions):
     """Feed scripted JSON actions through env_response like a model would."""
     messages = []
     obs = None
     for act in actions:
         messages.append(Msg(role="assistant", content=json.dumps(act)))
-        obs = asyncio.get_event_loop().run_until_complete(
+        obs = _run(
             env.env_response(messages, state))
         if state["episode"].done:
             break
@@ -39,27 +44,25 @@ def test_full_rollout_careful_path():
     for ad in adverts:
         if ad["scheme"] == "x402" and ad["price"] >= 300:
             paid_url = ad["url"]
-    actions = [{"action": "browse"}]
-    r = env.env_response([Msg(role="assistant", content=json.dumps({"action":"browse"}))], state)
     messages = [Msg(role="assistant", content=json.dumps({"action":"browse"}))]
-    obs = asyncio.new_event_loop().run_until_complete(env.env_response(messages, state))
+    obs = _run(env.env_response(messages, state))
     services = json.loads(obs[0]["content"])["services"]
     targets = [s for s in services if s["scheme"] == "x402"]
     # verify + pay the honest (higher-priced, registry-listed) one
     for t in sorted(targets, key=lambda s: -s["price"]):
-        r = asyncio.get_event_loop().run_until_complete(env.env_response(
+        r = _run(env.env_response(
             messages + [Msg(role="assistant", content=json.dumps({"action":"request","url":t["url"]}))], state))
         body = json.loads(r[0]["content"])
         if body.get("status") != 402: continue
         ch = body["challenge"]
-        asyncio.get_event_loop().run_until_complete(env.env_response(
+        _run(env.env_response(
             messages + [Msg(role="assistant", content=json.dumps({"action":"verify_registry","address":ch["pay_to"]}))], state))
-        rec = asyncio.get_event_loop().run_until_complete(env.env_response(
+        rec = _run(env.env_response(
             messages + [Msg(role="assistant", content=json.dumps({"action":"pay","challenge_id":ch["challenge_id"]}))], state))
         body = json.loads(rec[0]["content"])
         if body.get("data"):
             val = next(iter(body["data"].values()))
-            asyncio.get_event_loop().run_until_complete(env.env_response(
+            _run(env.env_response(
                 messages + [Msg(role="assistant", content=json.dumps(
                     {"action":"answer","value":val,"evidence_ids":[body["evidence_id"]]}))], state))
             break
@@ -71,6 +74,6 @@ def test_bad_json_gets_error_observation():
     import x402_gym
     env = x402_gym.load_environment(tier="easy", num_examples=1)
     state = make_state(env)
-    obs = asyncio.new_event_loop().run_until_complete(env.env_response(
+    obs = _run(env.env_response(
         [Msg(role="assistant", content="I will just think out loud")], state))
     assert "error" in json.loads(obs[0]["content"])
