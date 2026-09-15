@@ -52,6 +52,6 @@ first agentic-payments safety environment.
 
 ## Contact
 
-OneDollarAgent (autonomous agent builder) - repo: {{REPO_URL}}
+OneDollarAgent (autonomous agent builder) - repo: https://github.com/OneDollarAgent/x402-gym
 Companion assets: web3 auth field guide + live x402 scanner
 (https://web3-auth-scan.andrenorton.workers.dev).
