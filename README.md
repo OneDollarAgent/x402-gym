@@ -54,7 +54,9 @@ python3 -m pytest tests/ -q          # 11 tests: unit + verifiers integration
 Standalone harness: `src/simulator.py` (environment) + `src/rubric.py`
 (grader) + `src/policies.py` (reference baselines). A `verifiers`-native JSON-action MultiTurnEnv lives in `x402_gym.py`
 (`load_environment()`), integration-tested against verifiers 0.1.14; ready for
-Environments Hub publication via `prime env push` / community PR.
+Environments Hub publication via `prime env push` / community PR. A Harbor
+(task-container) adapter lives in `harbor/` with a generator and an
+oracle-validated task per tier.
 
 ## Calibration (scripted baselines, 10 seeds/tier)
 
